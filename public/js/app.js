@@ -31961,10 +31961,259 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./resources/js/App/Components/App.js":
-/*!********************************************!*\
-  !*** ./resources/js/App/Components/App.js ***!
-  \********************************************/
+/***/ "./resources/js/App/Components/App.jsx":
+/*!*********************************************!*\
+  !*** ./resources/js/App/Components/App.jsx ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return App; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _PersonList_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PersonList.jsx */ "./resources/js/App/Components/PersonList.jsx");
+/* harmony import */ var _LoginForm_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LoginForm.jsx */ "./resources/js/App/Components/LoginForm.jsx");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App(props) {
+    var _this;
+
+    _classCallCheck(this, App);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "getToken", function () {
+      return window.localStorage.getItem('_token');
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "setToken", function (token) {
+      window.localStorage.setItem('_token', token);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "componentDidMount", function () {
+      if (!_this.state.token) {
+        _this.setState({
+          logged_in: false
+        });
+
+        return;
+      }
+
+      fetch('/api/user', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + _this.state.token
+        }
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (data.id) {
+          _this.setState({
+            logged_in: true
+          });
+        } else {
+          _this.setState({
+            logged_in: false
+          });
+        }
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "onLoginSuccess", function (token) {
+      _this.setToken(token);
+
+      _this.setState({
+        logged_in: true,
+        token: token
+      });
+    });
+
+    _this.state = {
+      token: _this.getToken(),
+      logged_in: null
+    };
+    return _this;
+  }
+
+  _createClass(App, [{
+    key: "render",
+    value: function render() {
+      var content = 'Loading...';
+
+      if (this.state.logged_in !== null) {
+        if (this.state.logged_in) {
+          content = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PersonList_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+            token: this.state.token
+          });
+        } else {
+          content = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginForm_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            token: this.state.token,
+            onLoginSuccess: this.onLoginSuccess
+          });
+        }
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "MI6 application"), content);
+    }
+  }]);
+
+  return App;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/App/Components/LoginForm.jsx":
+/*!***************************************************!*\
+  !*** ./resources/js/App/Components/LoginForm.jsx ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LoginForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var LoginForm =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(LoginForm, _React$Component);
+
+  function LoginForm(props) {
+    var _this;
+
+    _classCallCheck(this, LoginForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(LoginForm).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "handleSubmit", function (e) {
+      e.preventDefault();
+      fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+          email: _this.state.email,
+          password: _this.state.password
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (data.status == 'success') {
+          _this.props.onLoginSuccess(data.data.token);
+        }
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleEmailChange", function (e) {
+      _this.setState({
+        email: e.target.value
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handlePasswordChange", function (e) {
+      _this.setState({
+        password: e.target.value
+      });
+    });
+
+    _this.state = {
+      email: null,
+      password: null
+    };
+    return _this;
+  }
+
+  _createClass(LoginForm, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Login form"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        action: "",
+        method: "post",
+        onSubmit: this.handleSubmit
+      }, "Email:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        name: "email",
+        onChange: this.handleEmailChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Password:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "password",
+        name: "password",
+        onChange: this.handlePasswordChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "Log in"
+      })));
+    }
+  }]);
+
+  return LoginForm;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/App/Components/PersonList.jsx":
+/*!****************************************************!*\
+  !*** ./resources/js/App/Components/PersonList.jsx ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -31998,16 +32247,30 @@ var App =
 function (_React$Component) {
   _inherits(App, _React$Component);
 
-  function App() {
+  function App(props) {
+    var _this;
+
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(App).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
+    _this.state = {
+      loading: false,
+      loaded: false,
+      people: []
+    };
+    return _this;
   }
 
   _createClass(App, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      fetch('/api/person').then(function (response) {
+      fetch('/api/person', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.props.token
+        }
+      }).then(function (response) {
         return response.json();
       }).then(function (data) {
         console.log(data);
@@ -32016,7 +32279,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "App component");
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Person list");
     }
   }]);
 
@@ -32040,11 +32303,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _App_Components_App_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App/Components/App.js */ "./resources/js/App/Components/App.js");
+/* harmony import */ var _App_Components_App_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App/Components/App.jsx */ "./resources/js/App/Components/App.jsx");
 
 
 
-react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_App_Components_App_js__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById('app'));
+react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_App_Components_App_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null), document.getElementById('app'));
 
 /***/ }),
 
@@ -32066,8 +32329,8 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! d:\www\_codingbootcamp\mi6\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! d:\www\_codingbootcamp\mi6\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\www\tools\cbp\mi6\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\www\tools\cbp\mi6\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
